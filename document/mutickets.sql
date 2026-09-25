@@ -1,4 +1,3 @@
--- Tạo cơ sở dữ liệu và sử dụng
 CREATE DATABASE IF NOT EXISTS mutickets CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE mutickets;
 
@@ -6,7 +5,7 @@ USE mutickets;
 CREATE TABLE nguoidung (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tendangnhap VARCHAR(100) NOT NULL,
-	matkhau VARCHAR(255) NULL,
+    matkhau VARCHAR(255) NULL,
     email VARCHAR(100) NOT NULL,
     googleid VARCHAR(255) NULL,
     vaitro ENUM('admin', 'tickets', 'schedule', 'user') DEFAULT 'user',
@@ -17,14 +16,15 @@ CREATE TABLE nguoidung (
 
 -- thong tin nguoi dung
 CREATE TABLE thongtinnguoidung(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	nguoidungid INT NOT NULL,
-	avatar VARCHAR(255) NULL,
-	ngaysinh DATE NULL,
-	quequan VARCHAR(255) NULL,
-	sdt VARCHAR(255) NULL,
-	CONSTRAINT uk_thongtin_nguoidung UNIQUE (nguoidungid),
-	FOREIGN KEY (nguoidungid) REFERENCES nguoidung(id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nguoidungid INT NOT NULL,
+    avatar VARCHAR(255) NULL,
+    ngaysinh DATE NULL,
+    quequan VARCHAR(255) NULL,
+    sdt VARCHAR(255) NULL,
+    lahoivien BOOLEAN DEFAULT FALSE,
+    CONSTRAINT uk_thongtin_nguoidung UNIQUE (nguoidungid),
+    FOREIGN KEY (nguoidungid) REFERENCES nguoidung(id) ON DELETE CASCADE
 );
 
 -- giaidau
@@ -74,10 +74,10 @@ CREATE TABLE khandai (
 CREATE TABLE khuvuc (
     id INT AUTO_INCREMENT PRIMARY KEY,
     khandaiid INT NOT NULL,
-	mablock VARCHAR(20) NOT NULL,
+    mablock VARCHAR(20) NOT NULL,
     ten VARCHAR(50) NOT NULL,
     giave DECIMAL(10,2) NOT NULL,
-	CONSTRAINT uk_khuvuc_khandai_block UNIQUE (khandaiid, mablock),
+    CONSTRAINT uk_khuvuc_khandai_block UNIQUE (khandaiid, mablock),
     FOREIGN KEY (khandaiid) REFERENCES khandai(id) ON DELETE CASCADE
 );
 
@@ -90,6 +90,18 @@ CREATE TABLE ghe (
     seasontickets BOOLEAN DEFAULT FALSE,
     CONSTRAINT uk_ghe_vitri UNIQUE (khuvucid, hangghe, soghe),
     FOREIGN KEY (khuvucid) REFERENCES khuvuc(id) ON DELETE CASCADE
+);
+
+-- ve mua
+CREATE TABLE vemua (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nguoidungid INT NOT NULL,
+    gheid INT NOT NULL,
+    muagiai VARCHAR(20) NOT NULL,
+    ngaytao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_vemua_ghe_mua UNIQUE (gheid, muagiai),
+    FOREIGN KEY (nguoidungid) REFERENCES nguoidung(id) ON DELETE CASCADE,
+    FOREIGN KEY (gheid) REFERENCES ghe(id) ON DELETE CASCADE
 );
 
 -- giughe
@@ -137,7 +149,7 @@ CREATE TABLE ve (
     FOREIGN KEY (gheid) REFERENCES ghe(id) ON DELETE SET NULL
 );
 
--- chuyển nhượng vé
+-- chuyen nhuong ve
 CREATE TABLE nhuongve (
     id INT AUTO_INCREMENT PRIMARY KEY,
     veid INT NOT NULL,
@@ -146,7 +158,7 @@ CREATE TABLE nhuongve (
     gianhuong DECIMAL(10,2) NOT NULL,
     trangthainhuong ENUM('dangraoban', 'daban', 'dahuy') DEFAULT 'dangraoban',
     ngaytao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT uk_nhuongve_veid UNIQUE (veid),
+    CONSTRAINT uk_nhuongve_veid UNIQUE (veid),
     FOREIGN KEY (veid) REFERENCES ve(id) ON DELETE CASCADE,
     FOREIGN KEY (nguoinhuongid) REFERENCES nguoidung(id) ON DELETE CASCADE,
     FOREIGN KEY (nguoimuaid) REFERENCES nguoidung(id) ON DELETE CASCADE
@@ -172,7 +184,7 @@ CREATE TABLE bangxephang (
     FOREIGN KEY (doibongid) REFERENCES doibong(id) ON DELETE CASCADE
 );
 
--- tintuc
+-- tintuc (có thể bỏ nha mấy ông)
 CREATE TABLE tintuc (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tieude VARCHAR(255) NOT NULL,
