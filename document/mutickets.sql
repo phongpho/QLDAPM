@@ -34,6 +34,14 @@ CREATE TABLE giaidau (
     ten VARCHAR(100) NOT NULL,
     CONSTRAINT uk_giaidau_apiid UNIQUE (apiid)
 );
+-- 
+CREATE TABLE IF (
+    doibongid INT NOT NULL,
+    giaidauid INT NOT NULL,
+    PRIMARY KEY (doibongid, giaidauid),
+    FOREIGN KEY (doibongid) REFERENCES doibong(id) ON DELETE CASCADE,
+    FOREIGN KEY (giaidauid) REFERENCES giaidau(id) ON DELETE CASCADE
+);
 
 -- doibong
 CREATE TABLE doibong (

@@ -1,0 +1,133 @@
+/* ==========================================================================
+   1. CẤU HÌNH FONT CHỮ TOÀN TRANG
+   ========================================================================== */
+body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   2. THANH TIÊU ĐỀ (NAVBAR)
+   ========================================================================== */
+.navbar-mu {
+    background-color: #111111;
+    border-bottom: 3px solid #DA291C;
+    padding: 0.8rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo thương hiệu (Sử dụng font Fraunces cổ điển, sang trọng) */
+.navbar-mu .navbar-brand {
+    font-family: 'Fraunces', serif;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.navbar-mu .navbar-brand span {
+    color: #DA291C;
+}
+
+/* Các liên kết Menu (DM Sans) */
+.navbar-mu .nav-link {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+    margin: 0 1rem;
+    transition: color 0.2s ease;
+}
+
+/* Hiệu ứng gạch chân đỏ khi Hover / Active */
+.navbar-mu .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #DA291C;
+    transition: width 0.3s ease;
+    margin-top: 4px;
+}
+
+.navbar-mu .nav-link:hover,
+.navbar-mu .nav-link.active {
+    color: #ffffff;
+}
+
+.navbar-mu .nav-link:hover::after,
+.navbar-mu .nav-link.active::after {
+    width: 100%;
+}
+
+/* Cụm Icon Giỏ hàng & Tài khoản */
+.navbar-mu .icon-btn {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-left: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-mu .icon-btn:hover {
+    color: #DA291C;
+}
+
+/* ==========================================================================
+   3. BANNER SLIDER (CAROUSEL)
+   ========================================================================== */
+.carousel-inner .carousel-item {
+    height: 865px;
+}
+
+.carousel-inner .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ==========================================================================
+   4. THIẾT BỊ DI ĐỘNG (RESPONSIVE MOBILE / TABLET)
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    /* Khung sổ xuống của Navbar trên Mobile */
+    .navbar-mu .navbar-collapse {
+        background-color: #1a1a1a;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 8px;
+        border-top: 1px solid #333;
+    }
+
+    .navbar-mu .nav-link {
+        margin: 0.5rem 0;
+    }
+
+    /* Ẩn hiệu ứng gạch chân trên mobile để tránh rối mắt */
+    .navbar-mu .nav-link::after {
+        display: none;
+    }
+
+    /* Khối Icon trên Mobile */
+    .navbar-mu .icon-group {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #333;
+    }
+
+    .navbar-mu .icon-btn {
+        margin-left: 0;
+        margin-right: 1.5rem;
+    }
+
+    /* Giảm chiều cao Carousel trên Mobile cho cân đối màn hình */
+    .carousel-inner .carousel-item {
+        height: 450px;
+    }
+}

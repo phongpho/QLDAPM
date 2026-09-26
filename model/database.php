@@ -1,11 +1,11 @@
 <?php
 class DATABASE {
-    private static $dns = "mysql:host=localhost;dbname=mutickets;port=3306";
+    private static $dns = "mysql:host=localhost;dbname=mutickets;port=3306;charset=utf8mb4";
     private static $username = "root";
-    private static $password = "";
+    private static $password = ""; // Mật khẩu XAMPP mặc định để rỗng
     private static $options = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
     );    
     private static $db;
     
@@ -52,6 +52,6 @@ class DATABASE {
         } else {
             echo "<p>Lỗi kết nối cơ sở dữ liệu</p>";
         }
-        self::disconnect();
     }
 }
+?>
